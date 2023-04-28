@@ -6,15 +6,96 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
+  id                 Int         @id @default(autoincrement())
+  name               String
+  email              String      @unique
+  profileId          Int?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  profiles           Profile[]
+  createdCommunities Community[]
+  posts              Post[]
+  replies            Reply[]
+}
+
+model Profile {
+  id                Int                @id @default(autoincrement())
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+  nickname          String
+  avatar            String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  communityProfiles CommunityProfile[]
+
+  @@index([userId])
+}
+
+model Image {
+  id     Int    @id @default(autoincrement())
+  url    String @db.MediumText
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+
+  @@index([postId])
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  text        String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  communityId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  images      Image[]
+  replies     Reply[]
+
+  @@index([userId])
+  @@index([communityId])
+}
+
+model Reply {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  avatar    String?
+  text      String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model Community {
+  id                Int                @id @default(autoincrement())
+  title             String
+  creator           User               @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId         Int
+  posts             Post[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  communityProfiles CommunityProfile[]
+
+  @@index([creatorId])
+}
+
+model CommunityProfile {
+  id          Int       @id @default(autoincrement())
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId   Int
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  communityId Int
+
+  @@index([profileId])
+  @@index([communityId])
 }
