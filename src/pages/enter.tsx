@@ -1,3 +1,4 @@
+import ExternalLoginBtn from "@components/external-login-btn";
 import { NextPage } from "next";
 
 const Enter: NextPage = () => {
@@ -23,15 +24,20 @@ const Enter: NextPage = () => {
           placeholder="비밀번호"
           className="appearance-none w-full border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 px-4 py-2"
         />
-        <button className="bg-rose-500 py-2 rounded-md text-white hover:bg-rose-600 transition-colors">
+        <button className="bg-rose-500 py-2 rounded-md text-white hover:bg-rose-600 transition-colors shadow-sm">
           로그인
         </button>
       </form>
-      <div className="px-8 flex justify-center">
+      <div className="px-8 pb-8 flex justify-center">
         <p className="text-sm text-gray-500">
           아직 우만코 계정이 없나요?{" "}
           <span className="underline text-rose-400">회원가입 하기</span>
         </p>
+      </div>
+      <div className="flex gap-8 pt-8 justify-center">
+        <ExternalLoginBtn icon="apple" />
+        <ExternalLoginBtn icon="kakao" />
+        <ExternalLoginBtn icon="github" />
       </div>
     </main>
   );
