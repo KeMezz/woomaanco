@@ -22,7 +22,7 @@ export default function Layout({ title, subtitle, children }: LayoutProps) {
       {/* <header className="flex justify-center items-center h-12 border-b w-full fixed top-0 bg-white">
         <h1 className="text-lg font-medium">{title}</h1>
       </header> */}
-      <main className="mb-[85px]">{children}</main>
+      <main className="mb-[85px] pb-12">{children}</main>
       <AnimatePresence initial={false}>
         {scrollDirection === "down" ? null : (
           <motion.nav
