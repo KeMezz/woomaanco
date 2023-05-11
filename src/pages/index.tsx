@@ -1,4 +1,5 @@
 import Layout from "@components/layout";
+import Link from "next/link";
 
 const todayString = new Date().toLocaleDateString("ko", {
   year: "numeric",
@@ -17,16 +18,15 @@ export default function Home() {
           </h1>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 px-6">
             {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-              <article
-                key={i}
-                className="flex flex-col shadow-sm rounded-lg overflow-hidden"
-              >
-                <div className="w-full h-28 bg-gray-100" />
-                <div className="flex flex-col p-2 sm:p-3 gap-1 bg-white">
-                  <h3 className="text-sm font-medium">그루브무단투기{i}</h3>
-                  <span className="text-xs">{i + 1}명 참여중</span>
-                </div>
-              </article>
+              <Link href={`/${i}`} key={i}>
+                <article className="flex flex-col shadow-sm rounded-lg overflow-hidden">
+                  <div className="w-full h-28 bg-gray-100" />
+                  <div className="flex flex-col p-2 sm:p-3 gap-1 bg-white">
+                    <h3 className="text-sm font-medium">그루브무단투기{i}</h3>
+                    <span className="text-xs">{i + 1}명 참여중</span>
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
