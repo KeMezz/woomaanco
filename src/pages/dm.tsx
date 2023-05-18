@@ -2,9 +2,8 @@ import Layout from "@components/layout";
 
 const DM = () => {
   return (
-    <Layout title="다이렉트 메시지">
+    <Layout title="다이렉트 메시지" subtitle="DM">
       <section className="max-w-2xl mx-auto">
-        {/* <h1 className="px-6 pt-6 pb-4 text-lg font-semibold">채팅</h1> */}
         <div className="flex flex-col m-4 gap-3">
           {Array.from({ length: 9 }, (_, i) => i).map((i) => (
             <div
